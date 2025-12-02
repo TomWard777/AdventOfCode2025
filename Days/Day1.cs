@@ -1,4 +1,4 @@
-namespace AdventOfCode2024;
+namespace AdventOfCode2025;
 
 public class Day1
 {
@@ -6,61 +6,56 @@ public class Day1
     {
         var input = FileParser.ReadInputFromFile("Day1.txt");
 
-        var list1 = new List<int>();
-        var list2 = new List<int>();
+        var moves = input.Select(x => ReadLine(x))
+            .ToArray();
 
-        foreach (var line in input)
-        {
-            var pair = GetValues(line);
-            list1.Add(pair[0]);
-            list2.Add(pair[1]);
-        }
-
-        list1.Sort();
-        list2.Sort();
-
-        var arr1 = list1.ToArray();
-        var arr2 = list2.ToArray();
-        var len = arr1.Length;
-
-        var diffsum = 0;
-
-        for (int i = 0; i < len; i++)
-        {
-            diffsum += Math.Abs(arr1[i] - arr2[i]);
-        }
-
-        var result = 0;
-
-        foreach (var n in list1)
-        {
-            result += n * GetSimilarityScore(n, list2);
-        }
-
-        Console.WriteLine("Sum of differences of sorted lists = " + diffsum);
-        Console.WriteLine("\nFinal result = " + result);
-    }
-
-    public int GetSimilarityScore(int number, List<int> list)
-    {
+        var position = 50;
         var ct = 0;
 
-        foreach (var n in list)
+        foreach (var (dir, steps) in moves)
         {
-            if (n == number)
+            // Take account of starting on zero then turning left
+            if(position == 0 && dir == "L")
             {
+                ct -= 1;
+            }
+
+            if (dir == "R")
+            {
+                position += steps;
+            }
+            else if (dir == "L")
+            {
+                position -= steps;
+            }
+
+            while (position < 0)
+            {
+                ct += 1;
+                position += 100;
+            };
+
+            while (position > 100)
+            {
+                position -= 100;
+                ct += 1;
+            }
+
+            if (position == 0 || position == 100)
+            {
+                position = 0;
                 ct++;
             }
+
+            Console.WriteLine(position);
+            ////Console.WriteLine(ct);
         }
 
-        return ct;
+        Console.WriteLine($"\nFinal result = {ct}");
     }
 
-    public int[] GetValues(string line)
+    public (string, int) ReadLine(string line)
     {
-        return line
-        .Split(" ", StringSplitOptions.RemoveEmptyEntries)
-        .Select(t => int.Parse(t))
-        .ToArray();
+        return (line.Substring(0, 1), int.Parse(line.Substring(1)));
     }
 }

@@ -1,6 +1,4 @@
-using Microsoft.VisualBasic;
-
-namespace AdventOfCode2024;
+namespace AdventOfCode2025;
 
 public static class Matrices
 {

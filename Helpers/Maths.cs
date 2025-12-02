@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace AdventOfCode2024;
+namespace AdventOfCode2025;
 
 public static class Maths
 {
@@ -82,6 +82,30 @@ public static class Maths
         while (b != 0);
 
         return a;
+    }
+
+    public static int GetNumberOfDigits(int n)
+    {
+        var k = 1;
+
+        while (IntPower(10, k) <= n)
+        {
+            k++;
+        }
+
+        return k;
+    }
+
+    public static int GetNumberOfDigits(long n)
+    {
+        var k = 1;
+
+        while (LongPower(10, k) <= n)
+        {
+            k++;
+        }
+
+        return k;
     }
 
     public static int GetNumberFromDigits(IEnumerable<int> digits)

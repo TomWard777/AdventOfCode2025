@@ -1,5 +1,5 @@
 
-namespace AdventOfCode2024;
+namespace AdventOfCode2025;
 
 public enum Facing
 {
