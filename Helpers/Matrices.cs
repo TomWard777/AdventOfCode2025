@@ -56,7 +56,7 @@ public static class Matrices
         };
 
         return places
-        .Where(p => p.Item1 >= 0 && p.Item1 < m && p.Item2 >= 0 && p.Item2 < n)
+        .Where(p => !IsPointOutsideMatrix(p, m, n))
         .ToArray();
     }
 
