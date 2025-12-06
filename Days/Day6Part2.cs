@@ -4,14 +4,14 @@ public class Day6Part2
 {
     public void Run()
     {
-        ////var input = FileParser.ReadInputFromFile("Day6.txt");
-        var input = FileParser.ReadInputFromFile("Test6.txt");
+        var input = FileParser.ReadInputFromFile("Day6.txt");
+        ///var input = FileParser.ReadInputFromFile("Test6.txt");
 
         var (mTemp, nTemp, matTemp) = Matrices.ReadToMatrixTuple(input);
 
         var (m, n, mat) = Matrices.GetTransposeMatrixTuple(mTemp, nTemp, matTemp);
 
-        Matrices.Draw(m, n, mat);
+        //Matrices.Draw(m, n, mat);
 
         Console.WriteLine($"\nFinal result = {ComputeAnswer(m, n, mat)}");
     }
@@ -37,35 +37,34 @@ public class Day6Part2
 
             if (string.IsNullOrWhiteSpace(numberStr))
             {
-                switch (operation)
-                {
-                    case '+':
-                    Console.WriteLine(buffer.Sum());
-                        total += buffer.Sum();
-                        break;
-                    case '*':
-                    Console.WriteLine(Maths.Product(buffer));
-                        total += Maths.Product(buffer);
-                        break;
-                    default:
-                        throw new Exception($"Error, operation is read as: {operation}");
-                }
-
+                total += GetCalculationResult(operation, buffer);
                 buffer.Clear();
             }
             else
             {
-                // Console.WriteLine("Add to buffer:");
-                // Console.WriteLine(numberStr);
-
                 buffer.Add(long.Parse(numberStr));
             }
 
             i++;
         }
 
-//// THERE'S NO BLANK ROW AT THE END, YOU NEED TO GET THE TOTAL FROM THE BUFFER ONE MORE TIME
+        // No blank line at the end, so we add a result to the total one more time
+        total += GetCalculationResult(operation, buffer);
+
         return total;
+    }
+
+    public long GetCalculationResult(char operation, List<long> buffer)
+    {
+        switch (operation)
+        {
+            case '+':
+                return buffer.Sum();
+            case '*':
+                return Maths.Product(buffer);
+            default:
+                throw new Exception($"Error, operation is read as: {operation}");
+        }
     }
 
     public long GetColumnValue(int colIndex, int m, int n, string[][] mat)
