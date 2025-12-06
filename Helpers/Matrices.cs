@@ -26,6 +26,20 @@ public static class Matrices
         return (m, n, mat);
     }
 
+    public static (int, int, char[][]) GetTransposeMatrixTuple(int m, int n, char[][] mat)
+    {
+        var rows = new List<char[]>();
+
+        for (int j = 0; j < n; j++)
+        {
+            rows.Add(GetColumn(j, m, mat));
+        }
+
+        var newMat = rows.ToArray();
+
+        return (n, m, newMat);
+    }
+
     public static IEnumerable<(int, int)> GetDirectlyAdjacentPlaces(int m, int n, int i, int j)
     {
         var places = new List<(int, int)>

@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace AdventOfCode2025;
 
 public class Day4
